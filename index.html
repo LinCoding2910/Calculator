@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <div id="calculator">
+        <div id="display">
+            <div id="content"></div>
+        </div>
+        <div id="buttons">
+            <button onclick="clearEverything()" id="clear">AC</button>
+            <button onclick="changeDisplay('1')" id="one">1</button>
+            <button onclick="changeDisplay('2')" id="two">2</button>
+            <button onclick="changeDisplay('3')" id="three">3</button>
+            <button onclick="changeDisplay('4')" id="four">4</button>
+            <button onclick="changeDisplay('5')" id="five">5</button>
+            <button onclick="changeDisplay('6')" id="six">6</button>
+            <button onclick="changeDisplay('7')" id="seven">7</button>
+            <button onclick="changeDisplay('8')" id="eight">8</button>
+            <button onclick="changeDisplay('9')" id="nine">9</button>
+            <button onclick="changeDisplay('0')" id="zero">0</button>
+            <button onclick="changeDisplay('+')" id="add">+</button>
+            <button onclick="changeDisplay('-')" id="subtract">-</button>
+            <button onclick="changeDisplay('*')" id="multiply">&times;</button>
+            <button onclick="changeDisplay('/')" id="divide">&divide;</button>
+            <button onclick="showResult()" id="equal">=</button>    
+        </div>
+    </div>
+</body>
+</html>
