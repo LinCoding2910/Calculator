@@ -2,149 +2,129 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 
-let isPreviousNumber = "";
+let isPreviousNumber
 
-const add = (a,b) => {return a + b};
+let display = document.getElementById('content');
 
-const subtract = (a,b) => {return a - b};
+const add = (a,b) => a + b;
 
-const multiply = (a,b) => {return a * b};
+const subtract = (a,b) =>  a - b;
+
+const multiply = (a,b) =>  a * b;
 
 const divide = (a, b) => {
-    if (b === 0) return ("ERROR");
-    const result =  a / b;
-    const decimalPlaces = result.toString().split('.')[1];
-  
-    if (decimalPlaces && decimalPlaces.length > 5) {
-      return result.toFixed(10);
-    } else if (decimalPlaces) {
-      return result.toString();
-    } else {
-      return result.toFixed(0);
-    }
-  };
+    if (b === 0) return ("ERROR: Can't be divided by Zero!");
+    return a / b;
+};
   
 
 const operate = (operator,firstInt,secondInt) => {
     let firstNumber = parseFloat(firstInt);
     let secondNumber = parseFloat(secondInt);
     
-    if (!secondNumber && !operator) {
-        isPreviousNumber = 1;
+    if (!operator) {
+        isPreviousNumber = true;
         return firstNumber;
     } else if (secondNumber === "") {
-        isPreviousNumber = 1;
-        return "ERROR";
-    }
+        isPreviousNumber = true;
+        return "ERROR: Incomplete Equation!";
+    };
 
-    switch(operator) {
-        case "+": 
-            return add(firstNumber,secondNumber);
-        case "-":
-            return subtract(firstNumber,secondNumber);
-        case "*":
-            return multiply(firstNumber,secondNumber);
-        case "/":
-            return divide(firstNumber,secondNumber);
-        default: 
-            return "error";
-    }
+	let operations = {
+		"+" : add,
+		"-" : subtract,
+		"*" : multiply,
+		"/" : divide,
+	};
+
+	return operations[operator](firstNumber,secondNumber);
 };
 
 const changeDisplay = (value) => {
-    let display = document.getElementById('content');
+    changeValueOfVariables(value);
+	
+	if (isPreviousNumber) {
+		assignEntityOfCaseOne(value);
+	} else {
+        assignEntityOfCaseTwo(value);
+    };
+};
 
+const assignEntityOfCaseOne = (item) => {
     let numberPattern = /\d+/;
-    let mathSignPattern = /[\+\-\*\/]/;
+    let multiplyAndDivide = /[\/*]/;
 
-    if (firstNumber && secondNumber && operator) {
-        if (mathSignPattern.test(value)) {
-            firstNumber = operate(operator,firstNumber,secondNumber); 
-            secondNumber = "";
-            operator = value;
-			console.log(firstNumber,operator);
-        } else {
-            secondNumber += value;
-            console.log(secondNumber);
-        };
-    } else if (firstNumber !== '' && operator) {
-        secondNumber += value;
-        console.log(secondNumber);
-    } else {
-        if (isPreviousNumber) {
-            if (numberPattern.test(value)) {
-                firstNumber = value;
-                console.log(firstNumber);
-            } else {
-                operator += value;
-                console.log(operator);
-            }; 
-        } else {
-            if (numberPattern.test(value)) {
-                firstNumber += value;
-                console.log(firstNumber);
-            } else {
-                operator += value;
-                console.log(operator);
-            };    
-        };   
+    let mathSymbols = {
+        "*" : "\u00D7",
+        "/" : "\u00F7"
     };
 
-    if (isPreviousNumber) {
-        if (firstNumber && operator) {
-            if (value === "*") {
-                display.textContent += "\u00D7"
-            } else if (value === "/") {
-                display.textContent += "\u00F7"   
-            } else {
-                display.textContent += value;
-            };
-        } else {
-            if (numberPattern.test(value)) {
-                display.textContent = value;
-                isPreviousNumber = 0;
-            } else if (value === "*") {
-                display.textContent += "\u00D7"
-            } else if (value === "/") {
-                display.textContent += "\u00F7"   
-            } else {
-                display.textContent += value;
-            };        
-        }
+    if (numberPattern.test(item)) {
+        display.textContent = item;
     } else {
-        if (value === "*") {
-            display.textContent += "\u00D7"
-        } else if (value === "/") {
-            display.textContent += "\u00F7"   
-        } else {
-            display.textContent += value;    
-        };    
+        multiplyAndDivide.test(item) ? display.textContent += mathSymbols[item] : display.textContent += item;
+    };
+        
+    isPreviousNumber = false;
+};
+
+const assignEntityOfCaseTwo = (item) => {
+    let multiplyAndDivide = /[\/*]/;
+
+    let mathSymbols = {
+        "*" : "\u00D7",
+        "/" : "\u00F7"
+    };
+
+    multiplyAndDivide.test(item) ? display.textContent += mathSymbols[item] : display.textContent += item;
+};
+
+let changeValueOfVariables = (value) => {
+    let mathSignPattern = /[\+\-\*\/]/;
+
+    mathSignPattern.test(value) ? assignValueCaseOne(value) : assignValueCaseTwo(value);
+};
+
+const assignValueCaseOne = (value) => {
+    if (firstNumber !== "" && secondNumber !== "" && operator) {
+        firstNumber = operate(operator,firstNumber,secondNumber);
+        secondNumber = "";
+    	operator = value;
+    	console.log(firstNumber,operator);
+    } else {
+        operator = value;
+    };
+};
+
+const assignValueCaseTwo = (value) => {
+    if (isPreviousNumber) {
+        firstNumber = value;
+    } else if (operator) {
+        secondNumber += value;
+    } else {
+        firstNumber += value;
     };
 };
 
 const showResult = () => {
     let display = document.getElementById('content');
+    
     display.textContent = operate(operator,firstNumber,secondNumber);
+    
     if (display.textContent === "ERROR") {
         firstNumber = "";
     } else {
         firstNumber = display.textContent;
-    }
+    };
     secondNumber = "";
     operator = "";
-    isPreviousNumber = 1;
+    isPreviousNumber = true;
 };
 
 const clearEverything = () => {
-    let display = document.getElementById('content');    display.textContent = "";
+    let display = document.getElementById('content');    
+	display.textContent = "";
     firstNumber = "";
     secondNumber = "";
     operator = "";
 };
-
-
-
-
-
-
-// store the value first if user no press equals
