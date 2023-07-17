@@ -2,7 +2,8 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 
-let isPreviousNumber
+let isPreviousNumber;
+let lastVariableChanged = [];
 
 let display = document.getElementById('content');
 
@@ -22,10 +23,12 @@ const operate = (operator,firstInt,secondInt) => {
     let firstNumber = parseFloat(firstInt);
     let secondNumber = parseFloat(secondInt);
     
-    if (!operator) {
+    if (!firstNumber) {
+        return "";
+    } else if (!operator) {
         isPreviousNumber = true;
         return firstNumber;
-    } else if (secondNumber === "") {
+    } else if (!secondNumber) {
         isPreviousNumber = true;
         return "ERROR: Incomplete Equation!";
     };
@@ -44,13 +47,13 @@ const changeDisplay = (value) => {
     changeValueOfVariables(value);
 	
 	if (isPreviousNumber) {
-		assignEntityOfCaseOne(value);
+		assignEntityCaseOne(value);
 	} else {
-        assignEntityOfCaseTwo(value);
+        assignEntityCaseTwo(value);
     };
 };
 
-const assignEntityOfCaseOne = (item) => {
+const assignEntityCaseOne = (item) => {
     let numberPattern = /\d+/;
     let multiplyAndDivide = /[\/*]/;
 
@@ -68,7 +71,7 @@ const assignEntityOfCaseOne = (item) => {
     isPreviousNumber = false;
 };
 
-const assignEntityOfCaseTwo = (item) => {
+const assignEntityCaseTwo = (item) => {
     let multiplyAndDivide = /[\/*]/;
 
     let mathSymbols = {
@@ -90,31 +93,40 @@ const assignValueCaseOne = (value) => {
         firstNumber = operate(operator,firstNumber,secondNumber);
         secondNumber = "";
     	operator = value;
-    	console.log(firstNumber,operator);
+        
+        lastVariableChanged.splice(0, lastVariableChanged.length, 1, 3);
     } else {
         operator = value;
+        
+        lastVariableChanged.push(3);
     };
 };
 
 const assignValueCaseTwo = (value) => {
     if (isPreviousNumber) {
         firstNumber = value;
+        
+        lastVariableChanged.splice(0, lastVariableChanged.length, 1);
     } else if (operator) {
         secondNumber += value;
+
+        lastVariableChanged.push(2);
     } else {
         firstNumber += value;
+
+        lastVariableChanged.push(1);
     };
 };
 
 const showResult = () => {
-    let display = document.getElementById('content');
-    
     display.textContent = operate(operator,firstNumber,secondNumber);
     
     if (display.textContent === "ERROR") {
         firstNumber = "";
+        lastVariableChanged.length = 0;
     } else {
         firstNumber = display.textContent;
+        lastVariableChanged.splice(0, lastVariableChanged.length, 1);
     };
     secondNumber = "";
     operator = "";
@@ -122,9 +134,21 @@ const showResult = () => {
 };
 
 const clearEverything = () => {
-    let display = document.getElementById('content');    
 	display.textContent = "";
     firstNumber = "";
     secondNumber = "";
     operator = "";
+    lastVariableChanged.length = 0;
+};
+
+const backspace = () => {
+    display.textContent = display.textContent.slice(0, -1);    
+    let variableToChange = lastVariableChanged.pop(); 
+    if (variableToChange === 1) {
+        firstNumber = firstNumber.slice(0, -1);
+    } else if (variableToChange === 2) {
+        secondNumber = secondNumber.slice(0, -1);
+    } else {
+        operator = operator.slice(0, -1);
+    }
 };
