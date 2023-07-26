@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="index.js" defer></script>
+    <title>Calculator</title>
+    <link rel="icon" type="image/x-icon" href="https://icons.iconarchive.com/icons/elegantthemes/beautiful-flat-one-color/128/calculator-icon.png">
+    <script src="calculator.js" defer></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="calculator">
@@ -13,23 +15,48 @@
             <div id="content"></div>
         </div>
         <div id="buttons">
-            <button onclick="clearEverything()" id="clear">AC</button>
-            <button onclick="backspace()" id="backspace">&larr;</button>
-            <button onclick="changeDisplay('1')" id="one">1</button>
-            <button onclick="changeDisplay('2')" id="two">2</button>
-            <button onclick="changeDisplay('3')" id="three">3</button>
-            <button onclick="changeDisplay('4')" id="four">4</button>
-            <button onclick="changeDisplay('5')" id="five">5</button>
-            <button onclick="changeDisplay('6')" id="six">6</button>
-            <button onclick="changeDisplay('7')" id="seven">7</button>
-            <button onclick="changeDisplay('8')" id="eight">8</button>
-            <button onclick="changeDisplay('9')" id="nine">9</button>
-            <button onclick="changeDisplay('0')" id="zero">0</button>
-            <button onclick="changeDisplay('+')" id="add">+</button>
-            <button onclick="changeDisplay('-')" id="subtract">-</button>
-            <button onclick="changeDisplay('*')" id="multiply">&times;</button>
-            <button onclick="changeDisplay('/')" id="divide">&divide;</button>
-            <button onclick="showResult()" id="equal">=</button>    
+            <button onclick="clearEverything()" class="functional-buttons">AC</button>
+            <button onclick="backspace()" class="functional-buttons">&larr;</button>
+            <button onclick="addDecimalPoint()" class="functional-buttons">.</button>
+            <button onclick="modifyDisplayAndVariables('+')" class="functional-buttons">+</button>
+            <button onclick="modifyDisplayAndVariables('1')" class="functional-buttons">1</button>
+            <button onclick="modifyDisplayAndVariables('2')" class="functional-buttons">2</button>
+            <button onclick="modifyDisplayAndVariables('3')" class="functional-buttons">3</button>
+            <button onclick="modifyDisplayAndVariables('-')" class="functional-buttons">-</button>
+            <button onclick="modifyDisplayAndVariables('4')" class="functional-buttons">4</button>
+            <button onclick="modifyDisplayAndVariables('5')" class="functional-buttons">5</button>
+            <button onclick="modifyDisplayAndVariables('6')" class="functional-buttons">6</button>
+            <button onclick="modifyDisplayAndVariables('*')" class="functional-buttons">&times;</button>
+            <button onclick="modifyDisplayAndVariables('7')" class="functional-buttons">7</button>
+            <button onclick="modifyDisplayAndVariables('8')" class="functional-buttons">8</button>
+            <button onclick="modifyDisplayAndVariables('9')" class="functional-buttons">9</button>
+            <button onclick="modifyDisplayAndVariables('/')" class="functional-buttons">&divide;</button>
+            <button onclick="modifyDisplayAndVariables('0')" class="functional-buttons">0</button>
+            <button onclick="modifyDisplayAndVariables('00')" class="functional-buttons">00</button>
+            <button onclick="showResult()" class="functional-buttons">=</button>    
+        </div>
+    </div>
+    <div id="shorcuts">
+        <div id="shorcut-key-display">Shorcut Key: </div>
+        <div id="container">
+            <button onclick="showShorcutKey('c')" class="shorcut-display-buttons">AC</button>
+            <button onclick="showShorcutKey('Backspace')" class="shorcut-display-buttons">&larr;</button>
+            <button onclick="showShorcutKey('1')" class="shorcut-display-buttons">1</button>
+            <button onclick="showShorcutKey('2')" class="shorcut-display-buttons">2</button>
+            <button onclick="showShorcutKey('3')" class="shorcut-display-buttons">3</button>
+            <button onclick="showShorcutKey('4')" class="shorcut-display-buttons">4</button>
+            <button onclick="showShorcutKey('5')" class="shorcut-display-buttons">5</button>
+            <button onclick="showShorcutKey('6')" class="shorcut-display-buttons">6</button>
+            <button onclick="showShorcutKey('7')" class="shorcut-display-buttons">7</button>
+            <button onclick="showShorcutKey('8')" class="shorcut-display-buttons">8</button>
+            <button onclick="showShorcutKey('9')" class="shorcut-display-buttons">9</button>
+            <button onclick="showShorcutKey('0')" class="shorcut-display-buttons">0</button>
+            <button onclick="showShorcutKey('+')" class="shorcut-display-buttons">+</button>
+            <button onclick="showShorcutKey('-')" class="shorcut-display-buttons">-</button>
+            <button onclick="showShorcutKey('*')" class="shorcut-display-buttons">&times;</button>
+            <button onclick="showShorcutKey('/')" class="shorcut-display-buttons">&divide;</button>
+            <button onclick="showShorcutKey('.')" class="shorcut-display-buttons">.</button>
+            <button onclick="showShorcutKey('Enter')" class="shorcut-display-buttons">=</button>
         </div>
     </div>
 </body>
