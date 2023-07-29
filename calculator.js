@@ -40,8 +40,8 @@ const operate = (operator, firstInt, secondInt) => {
         return "ERROR: Incomplete Equation!";
     };
 
-    firstNumber = parseFloat(firstInt);
-    secondNumber = parseFloat(secondInt);
+    firstNumber = parseInt(firstInt);
+    secondNumber = parseInt(secondInt);
 
     let operations = {
         "+": add,
@@ -221,15 +221,19 @@ const backspace = () => {
 const addDecimalPoint = () => {
     let lastCharacter = display.textContent.slice(-1);
 
-    if (lastCharacter.indexOf(".") === -1) {
-        if (isPreviousNumber) {
-            display.textContent = ".";
-            firstNumber = ".";
-            isPreviousNumber = false;
-        } else {
-            display.textContent += ".";
-            operator ? secondNumber += "." : firstNumber += ".";
-        }
+    if (isPreviousNumber) {
+        display.textContent = ".";
+        firstNumber = ".";
+        isPreviousNumber = false;
+        console.log("Adding decimal point to start a new number");
+    } else if (!operator && !firstNumber.includes(".")) {
+        display.textContent += ".";
+        firstNumber += ".";
+        console.log("Adding decimal point to firstNumber");
+    } else if (operator && !secondNumber.includes(".")) {
+        display.textContent += ".";
+        secondNumber += ".";
+        console.log("Adding decimal point to secondNumber");
     }
 };
 
